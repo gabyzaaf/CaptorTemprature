@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Tp_Projet
     class FileManagement
     {
         LinkedList<Capteur> listCapteur = new LinkedList<Capteur>();
+      
 
         public void executeList()
         {
@@ -24,8 +26,9 @@ namespace Tp_Projet
 
         }
 
-        public void ReadFileDetail(string id)
+        private LinkedList<Detail> ReadFileDetail(string id)
         {
+            LinkedList<Detail> listeDetail = new LinkedList<Detail>();
             StreamReader fichier = null;
             try
             {
@@ -36,7 +39,14 @@ namespace Tp_Projet
                      fichier = new StreamReader(listeFichier[i]);
                     while ((ligne = fichier.ReadLine()) != null)
                     {
-                        string[] detailLigne = ligne.Split(" ");
+                        DateTime dateConversion =Convert.ToDateTime(ligne.Split('"','"')[1]);
+                        string[] detailLigne = ligne.Split(' ');
+                        if (detailLigne[2].Equals(id))
+                        {
+                           
+                             Detail detail = new Detail(dateConversion, detailLigne[2], float.Parse(detailLigne[3]));
+                            listeDetail.AddFirst(detail);
+                        }
 
                     }
                 }
@@ -50,9 +60,7 @@ namespace Tp_Projet
             {
                 fichier.Close();
             }
-           
-
-
+            return listeDetail;
         }
 
         public void ReadFile()
@@ -80,9 +88,13 @@ namespace Tp_Projet
 
                     }).ToList().ForEach(p =>
                     {
-
-                        listCapteur.AddLast(new Capteur(p.id, p.description, p.nom, p.unite, p.abreviation, p.box, p.lieu));
-
+                        Capteur capt = new Capteur(p.id, p.description, p.nom, p.unite, p.abreviation, p.box, p.lieu);
+                        listCapteur.AddLast(capt);
+                        LinkedList<Detail> liste = ReadFileDetail(p.id);
+                        if (liste.Count==0 || liste==null)
+                        {
+                            capt.listeDetail = liste;
+                        }
                     });
                 ;
 

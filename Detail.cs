@@ -10,9 +10,9 @@ namespace Tp_Projet
     {
         public  DateTime dateHeure { get; set; }
         public string id { get; set; }
-        public int valeur { get; set; }
+        public float valeur { get; set; }
 
-        public Detail(DateTime date_heure,string id_v,int valeur_v)
+        public Detail(DateTime date_heure,string id_v,float valeur_v)
         {
             dateHeure = date_heure;
             id = id_v;

@@ -11,7 +11,7 @@ namespace Tp_Projet
         public string nom { get; set; }
         public string unite { get; set; }
         public string abreviation { get; set; }
-        public LinkedList<Detail> listeDetail { get; set; }
+        
 
 
         public Grandeur(string nom, string unite, string abreviation)

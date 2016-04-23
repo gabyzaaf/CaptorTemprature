@@ -14,7 +14,7 @@ namespace Tp_Projet
 
         public string box { get; set; }
         public string lieu { get; set; }
-
+        public LinkedList<Detail> listeDetail { get; set; }
 
         public Capteur(string id, string description, string nom, string unite, string abrevation, string box, string lieu)
         {
